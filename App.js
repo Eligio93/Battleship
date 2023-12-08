@@ -1,11 +1,8 @@
 class Ship{
-    constructor(length,position){
-        this.length=length,
-        // this.x=0;
-        // this.y=0;
+    constructor(length){
+        this.length=length;
         this.hits=0;
-        this.coordinates=["A1","A2","A3","A4"];
-        // this.position=position;
+        this.coordinates=["00","01","02","03"];
         this.sunk=false;
     }
     hit(){
@@ -21,16 +18,18 @@ class Ship{
     }
 }
 class Gameboard{
-    constructor(player){
-        this.player=player
-        this.shipsNumber=4;
-        this.ships=[new Ship(4)];
+    constructor(player,ship){
+        this.player=player;
+        this.shipsNumber=1;
+        this.ships=[ship];
         this.missingCoordinates=[]
     }
     receiveAttack(coordinates){
         let found=false
+        //looks in each ship if the coordinate of the shot matches
         this.ships.forEach(object=>{
-        if(object.coordinates.includes(coordinates)){           
+        if(object.coordinates.includes(coordinates)){  
+            //if matches hit the ship and check if it s sunk         
             found=true;
             object.hit();
             if(object.isSunk()){
@@ -38,14 +37,23 @@ class Gameboard{
             }
         }
       })
+      //if doesn t match put the coordinates in missing coordinates
+      //later we can change the color to the cell and make it impossible to click again
       if(found==false){
         this.missingCoordinates.push(coordinates);
       }
       return found
     }
 }
+class Player{
+    constructor(name,active){
+        this.name=name
+        this.active=active
+    }
+    attackOpponent(coordinates,opponentGameboard){
+        opponentGameboard.receiveAttack(coordinates);
+        this.active=false;
+    }
+}
 
-let gameboard1=new Gameboard();
-// gameboard1.receiveAttack("A1");
-
-module.exports=gameboard1;
+module.exports={Gameboard,Ship,Player};
