@@ -1,4 +1,4 @@
-//creates Ship clas
+//creates Ship class
 class Ship {
     constructor(length, coordinates) {
         this.length = length;
@@ -19,7 +19,7 @@ class Ship {
     }
 }
 
-
+//creates Gameboard class
 class Gameboard {
     constructor(player, ships) {
         this.player = player
@@ -31,7 +31,7 @@ class Gameboard {
 
     receiveAttack(coordinates) {
         if(this.totalShots.includes(coordinates)){
-            return
+            return "Shoot again"
         };
         let found=false;
         this.ships.forEach(ship => {
@@ -52,3 +52,14 @@ class Gameboard {
         }
     }
 }
+
+class Player{
+    constructor(name,active){
+        this.name=name,
+        this.active,active
+    }
+    attackOpponent(coordinates,opponentGameboard){
+        opponentGameboard.receiveAttack(coordinates);
+    }
+}
+
