@@ -3,7 +3,8 @@
 }
 body{
     display:flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    align-items: center;
     height: 100vh;
     padding:0;
     margin:0;
@@ -21,4 +22,7 @@ body{
     height:30px;
     width:30px;
     border:1px solid black
+}
+.cell:hover{
+    cursor: pointer;
 }
