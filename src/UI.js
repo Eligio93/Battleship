@@ -1,6 +1,6 @@
 //vanno le funzioni da usare in index.js che modifica il DOM
 import "./style.css"
-function displayGameboard(playerDiv,gameboard){
+function displayGameboard(gameboard){
     let shipscoordinates=((gameboard.ships).map(obj=>obj.coordinates)).flat();
     for(let i=0;i<10;i++){
         for(let j=0;j<10;j++){
@@ -12,8 +12,14 @@ function displayGameboard(playerDiv,gameboard){
             if(shipscoordinates.includes(cellCoordinates)){
                 cell.style.backgroundColor="green";
             }
-            playerDiv.appendChild(cell);
+            if(gameboard.player.name !== "Computer"){
+               document.getElementById("player-side").appendChild(cell)
+            }else{
+                document.getElementById("computer-side").appendChild(cell)
+            }  
         }
     }    
 }
+
+
 export {displayGameboard}

@@ -11,8 +11,8 @@ let computerShips=[new Ship(4,["70","71","72","73"]),new Ship(4,["80","81","82",
 let userGameboard=new Gameboard(user,userShips);
 let computerGameboard= new Gameboard(computer,computerShips)
 
-displayGameboard(document.getElementById("player-side"),userGameboard);
-displayGameboard(document.getElementById("computer-side"),computerGameboard);
+displayGameboard(userGameboard);
+displayGameboard(computerGameboard);
 if(userGameboard.player.active==true){
     console.log("Sono attivo")
     document.getElementById("player-side").style.pointerEvents="none";
