@@ -1,4 +1,5 @@
 //creates Ship class
+import { disableGameboard } from "./UI";
 class Ship {
     constructor(length, coordinates) {
         this.length = length;
@@ -21,17 +22,17 @@ class Ship {
 
 //creates Gameboard class
 class Gameboard {
-    constructor(player, ships) {
+    constructor(player,ships) {
         this.player = player
-        this.ships = [ships];
+        this.ships = ships;
         this.shipsNumber=ships.length;
-        this.missedShots = [];
+        // this.missedShots = [];
         this.totalShots = [];
     }
 
     receiveAttack(coordinates) {
         if(this.totalShots.includes(coordinates)){
-            return "Shoot again"
+            return  null //"Shoot again"
         };
         let found=false;
         this.ships.forEach(ship => {
@@ -40,26 +41,54 @@ class Gameboard {
                 ship.hit();
                 if (ship.isSunk()) {
                     this.shipsNumber -= 1;
-                    //check if there s any ship left
-                    return "Ship Sunked"
-                } else {
-                    return "Ship hitted"
+                //here we need to check if there s any ship lefts
                 }
             }
         })
-        if(found=false){
-            this.missedShots.push(coordinates);
+        if(found==false){
+            this.totalShots.push(coordinates);
         }
+        return found
+        
     }
 }
 
 class Player{
     constructor(name,active){
         this.name=name,
-        this.active,active
+        this.active=active
     }
     attackOpponent(coordinates,opponentGameboard){
-        opponentGameboard.receiveAttack(coordinates);
+        if(opponentGameboard.receiveAttack(coordinates)==false){
+            opponentGameboard.player.active=true;
+            this.active=false;
+        }
+       
     }
 }
+let playRound=function(user,computer,userGameboard,computerGameboard){
+    // while(//no winners)){
+    //     break
+    // }
+    if(user.active==true){
+        disableGameboard(userGameboard);
+        document.getElementById("computer-side").addEventListener("click", function(event){
+            console.log(event.target);
+        })
+    }else{
+        disableGameboard(userGameboard);
+    }
+    
+
+    // USER TURN CHECK == true
+    // if true click on board get coodinates
+    // attack(coordinate, opponent gameboard)
+    // while attacking on oppponet diable usergameboard
+    // disablegameboard(userGameBoard)
+
+    //else 
+    // 
+
+}
+export {Ship,Gameboard,Player,playRound}
 
