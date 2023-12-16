@@ -22,63 +22,77 @@ class Ship {
 
 //creates Gameboard class
 class Gameboard {
-    constructor(player,ships) {
+    constructor(player, ships) {
         this.player = player
         this.ships = ships;
-        this.shipsNumber=ships.length;
+        this.shipsNumber = ships.length;
         // this.missedShots = [];
         this.totalShots = [];
     }
 
     receiveAttack(coordinates) {
-        if(this.totalShots.includes(coordinates)){
-            return  null //"Shoot again"
+        if (this.totalShots.includes(coordinates)) {
+            return null //"Shoot again"
         };
-        let found=false;
+        let found = false;
         this.ships.forEach(ship => {
             if (ship.coordinates.includes(coordinates)) {
-                found=true;
+                found = true;
                 ship.hit();
                 if (ship.isSunk()) {
                     this.shipsNumber -= 1;
-                //here we need to check if there s any ship lefts
+                    //here we need to check if there s any ship lefts
                 }
             }
         })
-        if(found==false){
+        if (found == false) {
             this.totalShots.push(coordinates);
         }
         return found
-        
+
     }
 }
 
-class Player{
-    constructor(name,active){
-        this.name=name,
-        this.active=active
+class Player {
+    constructor(name, active) {
+        this.name = name,
+            this.active = active
     }
-    attackOpponent(coordinates,opponentGameboard){
-        if(opponentGameboard.receiveAttack(coordinates)==false){
-            opponentGameboard.player.active=true;
-            this.active=false;
+    attackOpponent(coordinates, opponentGameboard) {
+        if (opponentGameboard.receiveAttack(coordinates) == false) {
+            opponentGameboard.player.active = true;
+            this.active = false;
         }
-       
+
     }
 }
-let playRound=function(user,computer,userGameboard,computerGameboard){
-    // while(//no winners)){
-    //     break
-    // }
-    if(user.active==true){
-        disableGameboard(userGameboard);
-        document.getElementById("computer-side").addEventListener("click", function(event){
-            console.log(event.target);
+let playRound = function (activePlayerGameboard,otherPlayerGameboard) {
+    disableGameboard(activePlayerGameboard);
+    document.querySelectorAll(".game-section").forEach(element=>{
+        element.addEventListener("click",function(event){        
+            console.log("ciao");
+            playRound(otherPlayerGameboard,activePlayerGameboard)
         })
-    }else{
-        disableGameboard(userGameboard);
-    }
-    
+    })
+
+
+    // if (user.active == true) {
+    //     disableGameboard(userGameboard);
+    //     document.getElementById("computer-side").addEventListener("click", function (event) {
+    //         console.log(event.target);
+    //         user.active=false;
+    //         computer.active=true;
+    //     })
+    // } else {
+    //     disableGameboard(computerGameboard);
+    //     document.getElementById("player-side").addEventListener("click", function (event) {
+    //         console.log(event.target);
+    //         user.active=true;
+    //         computer.active=false;
+            
+    //     })
+    // }
+    // playRound(user,computer,userGameboard,computerGameboard)
 
     // USER TURN CHECK == true
     // if true click on board get coodinates
@@ -90,5 +104,5 @@ let playRound=function(user,computer,userGameboard,computerGameboard){
     // 
 
 }
-export {Ship,Gameboard,Player,playRound}
+export { Ship, Gameboard, Player, playRound }
 
