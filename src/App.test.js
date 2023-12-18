@@ -78,3 +78,13 @@ test("change player's turn", ()=>{
     expect(user.active).toBeTruthy();
     
 })
+test("receive null attack", ()=>{
+    let user= new Player("user", true);
+    let computer= new Player("computer" ,false);
+    let userShips=[new Ship(4,["00","01","02","03"]),new Ship(4,["21","22","23","24"])]
+    let computerShips=[new Ship(4,["30","31","32","33"]),new Ship(4,["81","82","83","84"])]
+    let userGameboard=new Gameboard(user,userShips);
+    let computerGameboard=new Gameboard(computer,computerShips);
+    userGameboard.receiveAttack("00");   
+    expect(userGameboard.receiveAttack("00")).toBeNull();
+})
