@@ -29,6 +29,19 @@ function disableGameboard(gameboard){
     document.getElementById("player-side").style.pointerEvents="none";
    }
 }
+function styleCell(gameboard,coordinates,found){
+    let cell;
+    if(gameboard.player.name=="computer"){
+        cell=document.getElementById("computer-side").querySelector('[data-coordinates="'+coordinates+'"]');
+    }else{
+        cell=document.getElementById("player-side").querySelector('[data-coordinates="'+coordinates+'"]');
+    }
+    if(found==true){           
+        cell.style.backgroundColor="pink";
+    }else if(found==false){
+        cell.style.backgroundColor="blue";
+    }
+}
 
 
-export {displayGameboard,disableGameboard}
+export {displayGameboard,disableGameboard,styleCell}
