@@ -43,5 +43,15 @@ function styleCell(gameboard,coordinates,found){
     }
 }
 
+function displayWinner(loserGameboard){
+    document.getElementById("player-side").style.pointerEvents="none";
+    document.getElementById("computer-side").style.pointerEvents="none";
+    if(loserGameboard.player.name=="computer"){
+        console.log("you win")
+    }else{
+        console.log("computer wins")
+    }
+}
 
-export {displayGameboard,disableGameboard,styleCell}
+
+export {displayGameboard,disableGameboard,styleCell,displayWinner}
