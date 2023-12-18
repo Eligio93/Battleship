@@ -1,5 +1,5 @@
 //creates Ship class
-import { disableGameboard } from "./UI";
+import { disableGameboard, styleCell } from "./UI";
 class Ship {
     constructor(length, coordinates) {
         this.length = length;
@@ -41,6 +41,7 @@ class Gameboard {
                 this.totalShots.push(coordinates);
                 found = true;
                 ship.hit();
+                styleCell(this,coordinates,found)
                 if (ship.isSunk()) {
                     this.shipsNumber -= 1;
                     //here we need to check if there s any ship lefts
@@ -49,6 +50,7 @@ class Gameboard {
         })
         if (found == false) {
             this.totalShots.push(coordinates);
+            styleCell(this,coordinates,found)
         }
         return found
 
