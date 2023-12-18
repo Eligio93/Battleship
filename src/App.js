@@ -31,12 +31,14 @@ class Gameboard {
     }
 
     receiveAttack(coordinates) {
-        if (this.totalShots.includes(coordinates)) {
-            return null //"Shoot again"
-        };
         let found = false;
+        if (this.totalShots.includes(coordinates)) {
+            return null; //"Shoot again"
+        };
+
         this.ships.forEach(ship => {
             if (ship.coordinates.includes(coordinates)) {
+                this.totalShots.push(coordinates);
                 found = true;
                 ship.hit();
                 if (ship.isSunk()) {
@@ -61,48 +63,29 @@ class Player {
     attackOpponent(coordinates, opponentGameboard) {
         if (opponentGameboard.receiveAttack(coordinates) == false) {
             opponentGameboard.player.active = true;
+            disableGameboard(opponentGameboard);//disable gameboard of the active player
             this.active = false;
         }
 
     }
 }
-let playRound = function (activePlayerGameboard,otherPlayerGameboard) {
-    disableGameboard(activePlayerGameboard);
-    document.querySelectorAll(".game-section").forEach(element=>{
-        element.addEventListener("click",function(event){        
-            console.log("ciao");
-            playRound(otherPlayerGameboard,activePlayerGameboard)
+
+let playRound = function (user, userGameboard, computer, computerGameboard) {
+    disableGameboard(userGameboard);
+    document.querySelectorAll(".game-section").forEach(element => {
+        element.addEventListener("click", function (event) {
+            let coordinates = event.target.getAttribute("data-coordinates");
+            if (user.active == true) {
+                console.log(coordinates)
+                user.attackOpponent(coordinates, computerGameboard);
+            } else {
+                console.log(coordinates)
+                computer.attackOpponent(coordinates, userGameboard)
+            }
         })
     })
-
-
-    // if (user.active == true) {
-    //     disableGameboard(userGameboard);
-    //     document.getElementById("computer-side").addEventListener("click", function (event) {
-    //         console.log(event.target);
-    //         user.active=false;
-    //         computer.active=true;
-    //     })
-    // } else {
-    //     disableGameboard(computerGameboard);
-    //     document.getElementById("player-side").addEventListener("click", function (event) {
-    //         console.log(event.target);
-    //         user.active=true;
-    //         computer.active=false;
-            
-    //     })
-    // }
-    // playRound(user,computer,userGameboard,computerGameboard)
-
-    // USER TURN CHECK == true
-    // if true click on board get coodinates
-    // attack(coordinate, opponent gameboard)
-    // while attacking on oppponet diable usergameboard
-    // disablegameboard(userGameBoard)
-
-    //else 
-    // 
-
 }
+
+
 export { Ship, Gameboard, Player, playRound }
 
