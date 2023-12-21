@@ -1,5 +1,5 @@
 //creates Ship class
-import { disableGameboard, styleCell } from "./UI";
+import { disableGameboard, styleCell,displayWinner } from "./UI";
 class Ship {
     constructor(length, coordinates) {
         this.length = length;
@@ -26,7 +26,6 @@ class Gameboard {
         this.player = player
         this.ships = ships;
         this.shipsNumber = ships.length;
-        // this.missedShots = [];
         this.totalShots = [];
     }
 
@@ -44,7 +43,9 @@ class Gameboard {
                 styleCell(this,coordinates,found)
                 if (ship.isSunk()) {
                     this.shipsNumber -= 1;
-                    //here we need to check if there s any ship lefts
+                    if(this.shipsNumber==0){
+                        displayWinner(this);
+                    }
                 }
             }
         })
@@ -71,6 +72,14 @@ class Player {
 
     }
 }
+function generateComputerCoordinates(){
+    let coordinates=Math.floor(Math.random()*100);
+    if(coordinates<10){
+        coordinates='0'+coordinates
+    }
+    return coordinates;
+}
+
 
 let playRound = function (user, userGameboard, computer, computerGameboard) {
     disableGameboard(userGameboard);
@@ -81,6 +90,7 @@ let playRound = function (user, userGameboard, computer, computerGameboard) {
                 console.log(coordinates)
                 user.attackOpponent(coordinates, computerGameboard);
             } else {
+                coordinates=generateComputerCoordinates();
                 console.log(coordinates)
                 computer.attackOpponent(coordinates, userGameboard)
             }
