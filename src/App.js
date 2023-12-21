@@ -51,6 +51,7 @@ class Gameboard {
         //if the shot is valid but doesn t find ship returns false
         if (found == false) {
             this.totalShots.push(coordinates);
+            
         }
         return found
     }
@@ -63,13 +64,14 @@ class Player {
     }
 
     attackOpponent(coordinates, opponentGameboard) {
+        let attackResult=opponentGameboard.receiveAttack(coordinates);
         //if the shot is valid change turn and return false
-        if (opponentGameboard.receiveAttack(coordinates) == false) {
+        if (attackResult == false) {
             opponentGameboard.player.active = true;
             this.active = false;
             return false
-        }else if(opponentGameboard.receiveAttack(coordinates) == true){
-            //the shot hited a ship and turn is not changing
+        }else if(attackResult == true){
+            //the shot hited a ship and turn is not changing           
             return true
         }else{
             //not valid shot so no changing turn
@@ -77,13 +79,34 @@ class Player {
         }
     }
 }
+/*if (user.gameboard.shipsNumber==0){
+    return "computer wins"
+}else if(computer.gameboard.shipsNumber==0){
+    return "You win"
+}else{
+    if(user.active==true){
+        disableGameboard(userGameboard);
+        document.getElementById("computer-side").addEventListener("click", function (event) {
+        let coordinates = event.target.getAttribute("data-coordinates");
+        user.attackOpponent(coordinates, computerGameboard);
+        ripeti in ricorsivo
+    }else{
+        generateCOordinates
+        computer.attackOpponent(coo)
+    }
+}*/
 
 
 function userRound(user, userGameboard, computerGameboard) {
+   
     disableGameboard(userGameboard);
     document.getElementById("computer-side").addEventListener("click", function (event) {
         let coordinates = event.target.getAttribute("data-coordinates");
-        user.attackOpponent(coordinates, computerGameboard);
+        console.log(coordinates);
+        console.log(user.active)
+        user.attackOpponent(coordinates, computerGameboard)
+        console.log(user.active)
+        
     })
 }
 
@@ -142,5 +165,5 @@ let playRound = function (user, userGameboard, computer, computerGameboard) {
 // }
 
 
-export { Ship, Gameboard, Player, /*playRound,*/ userRound }
+export { Ship, Gameboard, Player, playRound, userRound }
 
