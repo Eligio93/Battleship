@@ -51,7 +51,7 @@ class Gameboard {
         //if the shot is valid but doesn t find ship returns false
         if (found == false) {
             this.totalShots.push(coordinates);
-            
+
         }
         return found
     }
@@ -60,20 +60,20 @@ class Gameboard {
 class Player {
     constructor(name, active) {
         this.name = name,
-        this.active = active
+            this.active = active
     }
 
     attackOpponent(coordinates, opponentGameboard) {
-        let attackResult=opponentGameboard.receiveAttack(coordinates);
+        let attackResult = opponentGameboard.receiveAttack(coordinates);
         //if the shot is valid change turn and return false
         if (attackResult == false) {
             opponentGameboard.player.active = true;
             this.active = false;
             return false
-        }else if(attackResult == true){
+        } else if (attackResult == true) {
             //the shot hited a ship and turn is not changing           
             return true
-        }else{
+        } else {
             //not valid shot so no changing turn
             return null
         }
@@ -83,60 +83,61 @@ class Player {
 
 function userRound(user, userGameboard, computerGameboard) {
     disableGameboard(userGameboard);
-    return new Promise((resolve)=>{
-        function handleClick(event){
+    return new Promise((resolve) => {
+        function handleClick(event) {
             let coordinates = event.target.getAttribute("data-coordinates");
             console.log(coordinates);
-            console.log(user.active)
-            user.attackOpponent(coordinates, computerGameboard);            
-            console.log(user.active);
-            if(!user.active){
-               resolve()
-            }else{
+            console.log(user.name)
+            user.attackOpponent(coordinates, computerGameboard);
+            if (!user.active) {
+                resolve()
+            } else {
                 document.getElementById("computer-side").removeEventListener("click", handleClick);
                 resolve(userRound(user, userGameboard, computerGameboard))
-            } 
+            }
         }
         document.getElementById("computer-side").addEventListener("click", handleClick)
-        
-    })  
+
+    })
 }
 
 function computerRound(computer, computerGameboard, userGameboard) {
     disableGameboard(computerGameboard);
-    let coordinates = generateComputerCoordinates();
-    console.log(coordinates)
-    computer.attackOpponent(coordinates, userGameboard)
-}
-
-
-let playRound = function (user, userGameboard, computer, computerGameboard) {
-    disableGameboard(userGameboard);
-    document.querySelectorAll(".game-section").forEach(element => {
-        element.addEventListener("click", function (event) {
-            let coordinates = event.target.getAttribute("data-coordinates");
-            if (user.active == true) {
-                console.log(coordinates)
-                user.attackOpponent(coordinates, computerGameboard);
-            } else {
-                // coordinates=generateComputerCoordinates();
-                console.log(coordinates)
-                computer.attackOpponent(coordinates, userGameboard)
-            }
-        })
+    return new Promise((resolve) => {
+        let coordinates = generateComputerCoordinates();
+        console.log(coordinates)
+        console.log(computer.active)
+        computer.attackOpponent(coordinates, userGameboard)
+        console.log(computer.active);
+        if (!computer.active) {
+            resolve()
+        } else {
+            resolve(computerRound(computer, computerGameboard, userGameboard))
+        }
     })
 }
 
 
+let playRound = async function (user, userGameboard, computer, computerGameboard) {
+    while(true){
+        await userRound(user, userGameboard, computerGameboard);
+        await computerRound(computer, computerGameboard, userGameboard)
+    }
+    
+
+}
 
 
-// function generateComputerCoordinates(){
-//     let coordinates=Math.floor(Math.random()*100);
-//     if(coordinates<10){
-//         coordinates='0'+coordinates
-//     }
-//     return coordinates;
-// }
+
+
+function generateComputerCoordinates() {
+    let coordinates = Math.floor(Math.random() * 100);
+    coordinates=coordinates.toString();
+    if (coordinates < 10) {
+        coordinates = '0' + coordinates
+    }
+    return coordinates;
+}
 
 
 // let playRound = function (user, userGameboard, computer, computerGameboard) {
@@ -157,5 +158,5 @@ let playRound = function (user, userGameboard, computer, computerGameboard) {
 // }
 
 
-export { Ship, Gameboard, Player, playRound, userRound }
+export { Ship, Gameboard, Player, playRound, userRound, computerRound }
 
