@@ -79,35 +79,27 @@ class Player {
         }
     }
 }
-/*if (user.gameboard.shipsNumber==0){
-    return "computer wins"
-}else if(computer.gameboard.shipsNumber==0){
-    return "You win"
-}else{
-    if(user.active==true){
-        disableGameboard(userGameboard);
-        document.getElementById("computer-side").addEventListener("click", function (event) {
-        let coordinates = event.target.getAttribute("data-coordinates");
-        user.attackOpponent(coordinates, computerGameboard);
-        ripeti in ricorsivo
-    }else{
-        generateCOordinates
-        computer.attackOpponent(coo)
-    }
-}*/
 
 
 function userRound(user, userGameboard, computerGameboard) {
-   
     disableGameboard(userGameboard);
-    document.getElementById("computer-side").addEventListener("click", function (event) {
-        let coordinates = event.target.getAttribute("data-coordinates");
-        console.log(coordinates);
-        console.log(user.active)
-        user.attackOpponent(coordinates, computerGameboard)
-        console.log(user.active)
+    return new Promise((resolve)=>{
+        function handleClick(event){
+            let coordinates = event.target.getAttribute("data-coordinates");
+            console.log(coordinates);
+            console.log(user.active)
+            user.attackOpponent(coordinates, computerGameboard);            
+            console.log(user.active);
+            if(!user.active){
+               resolve()
+            }else{
+                document.getElementById("computer-side").removeEventListener("click", handleClick);
+                resolve(userRound(user, userGameboard, computerGameboard))
+            } 
+        }
+        document.getElementById("computer-side").addEventListener("click", handleClick)
         
-    })
+    })  
 }
 
 function computerRound(computer, computerGameboard, userGameboard) {
