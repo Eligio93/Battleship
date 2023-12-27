@@ -90,12 +90,13 @@ function userRound(user, userGameboard, computerGameboard) {
             console.log(user.name)
             user.attackOpponent(coordinates, computerGameboard);
             if (!user.active) {
+                document.getElementById("computer-side").removeEventListener("click", handleClick);
                 resolve()
             } else {
                 document.getElementById("computer-side").removeEventListener("click", handleClick);
                 resolve(userRound(user, userGameboard, computerGameboard))
             }
-        }
+        }       
         document.getElementById("computer-side").addEventListener("click", handleClick)
 
     })
