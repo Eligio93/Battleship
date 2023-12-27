@@ -91,7 +91,7 @@ function userRound(user, userGameboard, computerGameboard) {
             if (!user.active) {
                 //remove the event listener
                 document.getElementById("computer-side").removeEventListener("click", handleClick);
-                resolve()
+                    resolve()
             } else {
                 //remove the event listener
                 document.getElementById("computer-side").removeEventListener("click", handleClick);
@@ -105,15 +105,20 @@ function userRound(user, userGameboard, computerGameboard) {
 
 function computerRound(computer, computerGameboard, userGameboard) {
     disableGameboard(computerGameboard);
-    return new Promise((resolve) => {
+    return new Promise(async (resolve) => {
         let coordinates = generateComputerCoordinates();
         let attackResult=computer.attackOpponent(coordinates, userGameboard)
-        styleCell(computer,attackResult,coordinates);
+        await new Promise((resolveTimeOut)=>{
+            setTimeout(()=>{
+                styleCell(computer,attackResult,coordinates); 
+                resolveTimeOut();  
+            },1000)           
+        })       
         if (!computer.active) {
-            resolve()
+            resolve()  
         } else {
             resolve(computerRound(computer, computerGameboard, userGameboard))
-        }
+        }    
     })
 }
 
@@ -123,8 +128,6 @@ let playRound = async function (user, userGameboard, computer, computerGameboard
         await userRound(user, userGameboard, computerGameboard);
         await computerRound(computer, computerGameboard, userGameboard)
     }
-    
-
 }
 
 
