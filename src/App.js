@@ -86,19 +86,20 @@ function userRound(user, userGameboard, computerGameboard) {
     return new Promise((resolve) => {
         function handleClick(event) {
             let coordinates = event.target.getAttribute("data-coordinates");
-            console.log(coordinates);
-            console.log(user.name)
-            user.attackOpponent(coordinates, computerGameboard);
+            let attackResult=user.attackOpponent(coordinates, computerGameboard);
+            styleCell(user,attackResult,coordinates);            
             if (!user.active) {
+                //remove the event listener
                 document.getElementById("computer-side").removeEventListener("click", handleClick);
                 resolve()
             } else {
+                //remove the event listener
                 document.getElementById("computer-side").removeEventListener("click", handleClick);
+                //resolve in a recursive way
                 resolve(userRound(user, userGameboard, computerGameboard))
             }
         }       
-        document.getElementById("computer-side").addEventListener("click", handleClick)
-
+        document.getElementById("computer-side").addEventListener("click", handleClick);
     })
 }
 
@@ -106,10 +107,8 @@ function computerRound(computer, computerGameboard, userGameboard) {
     disableGameboard(computerGameboard);
     return new Promise((resolve) => {
         let coordinates = generateComputerCoordinates();
-        console.log(coordinates)
-        console.log(computer.active)
-        computer.attackOpponent(coordinates, userGameboard)
-        console.log(computer.active);
+        let attackResult=computer.attackOpponent(coordinates, userGameboard)
+        styleCell(computer,attackResult,coordinates);
         if (!computer.active) {
             resolve()
         } else {
