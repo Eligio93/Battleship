@@ -1,7 +1,8 @@
 // body.addevnetlistener(click, function(event){
     //event.target
-import { disableGameboard, displayGameboard } from "./UI";
-import { Player,Gameboard,Ship, playRound } from "./App";
+import { displayGameboard } from "./UI";
+import { Player,Gameboard,Ship} from "./App";
+import { playRound, } from "./gameController";
 import "./style.css"
 
 let user= new Player("user", true);
@@ -16,4 +17,8 @@ let computerGameboard=new Gameboard(computer,computerShips);
 displayGameboard(userGameboard);
 displayGameboard(computerGameboard);
 
-playRound(user,computer,userGameboard,computerGameboard)
+playRound(user, userGameboard, computer, computerGameboard);
+
+
+
+

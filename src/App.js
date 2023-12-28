@@ -1,5 +1,4 @@
 //creates Ship class
-import { disableGameboard, styleCell, displayWinner } from "./UI";
 class Ship {
     constructor(length, coordinates) {
         this.length = length;
@@ -80,86 +79,5 @@ class Player {
     }
 }
 
-
-function userRound(user, userGameboard, computerGameboard) {
-    disableGameboard(userGameboard);
-    return new Promise((resolve) => {
-        function handleClick(event) {
-            let coordinates = event.target.getAttribute("data-coordinates");
-            let attackResult=user.attackOpponent(coordinates, computerGameboard);
-            styleCell(user,attackResult,coordinates);            
-            if (!user.active) {
-                //remove the event listener
-                document.getElementById("computer-side").removeEventListener("click", handleClick);
-                    resolve()
-            } else {
-                //remove the event listener
-                document.getElementById("computer-side").removeEventListener("click", handleClick);
-                //resolve in a recursive way
-                resolve(userRound(user, userGameboard, computerGameboard))
-            }
-        }       
-        document.getElementById("computer-side").addEventListener("click", handleClick);
-    })
-}
-
-function computerRound(computer, computerGameboard, userGameboard) {
-    disableGameboard(computerGameboard);
-    return new Promise(async (resolve) => {
-        let coordinates = generateComputerCoordinates();
-        let attackResult=computer.attackOpponent(coordinates, userGameboard)
-        await new Promise((resolveTimeOut)=>{
-            setTimeout(()=>{
-                styleCell(computer,attackResult,coordinates); 
-                resolveTimeOut();  
-            },1000)           
-        })       
-        if (!computer.active) {
-            resolve()  
-        } else {
-            resolve(computerRound(computer, computerGameboard, userGameboard))
-        }    
-    })
-}
-
-
-let playRound = async function (user, userGameboard, computer, computerGameboard) {
-    while(true){
-        await userRound(user, userGameboard, computerGameboard);
-        await computerRound(computer, computerGameboard, userGameboard)
-    }
-}
-
-
-
-
-function generateComputerCoordinates() {
-    let coordinates = Math.floor(Math.random() * 100);
-    coordinates=coordinates.toString();
-    if (coordinates < 10) {
-        coordinates = '0' + coordinates
-    }
-    return coordinates;
-}
-
-
-// let playRound = function (user, userGameboard, computer, computerGameboard) {
-//     disableGameboard(userGameboard);
-//     document.querySelectorAll(".game-section").forEach(element => {
-//         element.addEventListener("click", function (event) {
-//             let coordinates = event.target.getAttribute("data-coordinates");
-//             if (user.active == true) {
-//                 console.log(coordinates)
-//                 user.attackOpponent(coordinates, computerGameboard);
-//             } else {
-//                 // coordinates=generateComputerCoordinates();
-//                 console.log(coordinates)
-//                 computer.attackOpponent(coordinates, userGameboard)
-//             }
-//         })
-//     })
-// }
-
-
-export { Ship, Gameboard, Player, playRound, userRound, computerRound }
+export { Ship, Gameboard, Player }
 
