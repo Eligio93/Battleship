@@ -3,14 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="../src/style.css">
    
     <title>Document</title>
 </head>
 <body>
-    <div id="player-side">
+    <div id="main">
+        <div id="initial-board">
+
+        </div>
+        <div id="shipselection">
+            <h1>Drag your ship</h1>
+            <div class="ship" id="5blocks" draggable="true">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="ship" id="4blocks" draggable="true">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="ship" id="3blocks" draggable="true">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="ship" id="3blocks2" draggable="true">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="ship" id="2blocks" draggable="true">
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    
+
     </div>
-    <div id="computer-side"></div>
-    <script src="main.js"></script>
+   
+    <!-- <div class="game-section"id="player-side">
+    </div>
+    <div class="game-section" id="computer-side"></div>
+    <script src="main.js"></script> -->
+    <script>
+        function displayInitialBoard(){
+            for (let i = 0; i < 10; i++) {
+                for (let j = 0; j < 10; j++) {
+                    let cell = document.createElement("div");
+                    cell.className = "cell";
+                    cell.textContent = i + '' + j;
+                    cell.setAttribute("data-coordinates", i + '' + j);
+                    document.getElementById("initial-board").appendChild(cell);
+                }
+            }
+            
+
+        }
+        displayInitialBoard();
+
+    </script>
 </body>
 </html>
