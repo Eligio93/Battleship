@@ -33,7 +33,7 @@ body{
     height:100%;
     
 }
-#initial-board{
+#deployment-board{
     display: flex;
     flex-wrap: wrap;
     width:300px;
@@ -41,29 +41,29 @@ body{
     align-items: center;
     justify-content: center;
 }
-#shipselection{
+#selection-panel{
     display:flex;
     flex-direction: column;
     height:300px;
     width:300px;
     gap:5px;
 }
-#shipselection h1{
+#selection-panel h1{
     margin-top:0px;
 }
-.ship{
+.dragging-ship{
     display:flex;
     width:fit-content;
     cursor:grab;
 }
 
-.ship div{
+.dragging-ship div{
     border:1px solid black;
     height:30px;
     width:30px;
     background-color: pink;
 }
-#ship-block{
+#ships-dragging-container{
     display:flex;
     flex: 1;
     flex-direction: column;
