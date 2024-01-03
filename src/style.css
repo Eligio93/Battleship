@@ -44,16 +44,23 @@ body{
 #shipselection{
     display:flex;
     flex-direction: column;
-    gap:10px;
 }
 .ship{
     display:flex;
     width:fit-content;
     cursor:grab;
+    /* width:30px;
+    flex-wrap: wrap;
+    height:fit-content; */
 }
 .ship div{
     border:1px solid black;
     height:30px;
     width:30px;
     background-color: pink;
+}
+#ship-block{
+    display:flex;
+    flex-direction: column;
+    gap:10px;
 }
