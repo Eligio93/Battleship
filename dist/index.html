@@ -9,38 +9,42 @@
 </head>
 <body>
     <div id="main">
-        <div id="initial-board">
+        <div id="deployment-board">
 
         </div>
-        <div id="shipselection">
-            <h1>Drag your ship</h1>
-            <div class="ship" id="5blocks" draggable="true">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
+        <div id="selection-panel">
+            <h1>Drag your ships</h1>
+            <div id="ships-dragging-container">
+                <div class="dragging-ship" data-length="5" draggable="true">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div class="dragging-ship" data-length="4" draggable="true">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div class="dragging-ship" data-length="3" draggable="true">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div class="dragging-ship" data-length="3" draggable="true">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div class="dragging-ship" data-length="2" draggable="true">
+                    <div></div>
+                    <div></div>
+                </div>
             </div>
-            <div class="ship" id="4blocks" draggable="true">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
-            <div class="ship" id="3blocks" draggable="true">
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
-            <div class="ship" id="3blocks2" draggable="true">
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
-            <div class="ship" id="2blocks" draggable="true">
-                <div></div>
-                <div></div>
-            </div>
+           
+            <button id="rotate">Rotate</button>
         </div>
     
 
@@ -51,6 +55,28 @@
     <div class="game-section" id="computer-side"></div>
     <script src="main.js"></script> -->
     <script>
+        let rotateBtn=document.getElementById("rotate");
+        rotateBtn.addEventListener("click",function(){
+            let shipBlock=document.getElementById("ships-dragging-container");
+            let shipBlockDirection=window.getComputedStyle(shipBlock).getPropertyValue("flex-direction");
+            if(shipBlockDirection =="column"){
+                shipBlock.style.flexDirection="row";
+                shipBlock.querySelectorAll(".dragging-ship").forEach(ship=>{
+                ship.style.width="30px";
+                ship.style.flexWrap="wrap";
+                ship.style.height="fit-content";
+            })}else{
+                shipBlock.style.flexDirection="column";
+                shipBlock.querySelectorAll(".dragging-ship").forEach(ship=>{
+                ship.style.width="";
+                ship.style.flexWrap="";
+                ship.style.height="";
+            })
+                
+               
+
+            }
+        })
         function displayInitialBoard(){
             for (let i = 0; i < 10; i++) {
                 for (let j = 0; j < 10; j++) {
@@ -58,7 +84,7 @@
                     cell.className = "cell";
                     cell.textContent = i + '' + j;
                     cell.setAttribute("data-coordinates", i + '' + j);
-                    document.getElementById("initial-board").appendChild(cell);
+                    document.getElementById("deployment-board").appendChild(cell);
                 }
             }
             
