@@ -44,15 +44,19 @@ body{
 #shipselection{
     display:flex;
     flex-direction: column;
+    height:300px;
+    width:300px;
+    gap:5px;
+}
+#shipselection h1{
+    margin-top:0px;
 }
 .ship{
     display:flex;
     width:fit-content;
     cursor:grab;
-    /* width:30px;
-    flex-wrap: wrap;
-    height:fit-content; */
 }
+
 .ship div{
     border:1px solid black;
     height:30px;
@@ -61,6 +65,7 @@ body{
 }
 #ship-block{
     display:flex;
+    flex: 1;
     flex-direction: column;
     gap:10px;
 }
