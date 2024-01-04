@@ -91,6 +91,36 @@
 
         }
         displayInitialBoard();
+        let draggingShip=document.querySelectorAll(".dragging-ship");
+        for(let ship of draggingShip){
+            ship.addEventListener("dragstart",function(){
+                console.log("start");
+            })
+        }
+        for(let ship of draggingShip){
+            ship.addEventListener("dragend",function(){
+                console.log("end");
+            })
+        }
+        let droppingCell=document.querySelectorAll(".cell");
+        for(let cell of droppingCell){
+            cell.addEventListener("dragover",function(e){
+                e.preventDefault();
+                console.log("over");
+            })
+            cell.addEventListener("dragenter",function(e){
+                e.preventDefault();
+                setTimeout(() => {
+                    console.log("enter");
+                }, 0);
+            })
+            cell.addEventListener("dragleave",function(e){
+                console.log("leave");
+            })
+            cell.addEventListener("drop",function(e){
+                console.log("drop");
+            })
+        }
 
     </script>
 </body>
